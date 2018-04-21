@@ -1,18 +1,22 @@
 defmodule Upcaser do
-  @moduledoc """
-  Documentation for Upcaser.
-  """
+  def start do
+    pid = spawn(Upcaser, :loop, [])
+    {:ok, pid}
+  end
 
-  @doc """
-  Hello world.
+  def loop do
+      receive do
+        {from, ref, {:upcase, str}} -> send(from, {:ok, ref, String.upcase(str)})
+      end
+      loop
+    end
 
-  ## Examples
-
-      iex> Upcaser.hello
-      :world
-
-  """
-  def hello do
-    :world
+  def upcase(server_pid, str) do
+    # We'll make a reference
+    ref = make_ref()
+    send(server_pid, {self(), ref, {:upcase, str}})
+    receive do
+      {:ok, ^ref, str} -> {:ok, str}
+    end
   end
 end
