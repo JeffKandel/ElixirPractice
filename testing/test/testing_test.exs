@@ -1,6 +1,6 @@
 defmodule TestingTest do
   use ExUnit.Case
-  #doctest Testing
+  doctest Testing
 
   test "true" do
     assert 1 + 1 == 2
@@ -20,5 +20,17 @@ defmodule TestingTest do
 
   test "uppercase converts every other word to upper case" do
     assert Testing.uppercase("foo bar baz whee") == "foo BAR baz WHEE"
+  end
+
+  test "unvowel doesn't change the first word" do
+    assert Testing.unvowel("foo") == "foo"
+  end
+
+  test "unvowel removes the second words vowels" do
+    assert Testing.unvowel("foo bar") == "foo br"
+  end
+
+  test "unvowel remove every other words vowels" do
+    assert Testing.unvowel("foo bar baz whee") == "foo br baz wh"
   end
 end

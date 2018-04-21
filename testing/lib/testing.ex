@@ -1,18 +1,41 @@
 defmodule Testing do
   @moduledoc """
-  Documentation for Testing.
+    transforming some string
+
+    Examples:
+
+    iex> Testing.uppercase("this is an example")
+    "this IS an EXAMPLE"
+
+    iex> Testing.unvowel("this is an example")
+    "this s an xmpl"
+
   """
+  def uppercase(string) do
+    string
+    |> every_other_word(&String.upcase/1)
+  end
 
-  @doc """
-  Hello world.
+  def unvowel(string) do
+    string
+    |> every_other_word(&remove_vowels/1)
+  end
 
-  ## Examples
+  def remove_vowels(word) do
+    Regex.replace(~r/[aeiou]/, word, "")
+  end
 
-      iex> Testing.hello
-      :world
-
-  """
-  def hello do
-    :world
+  def every_other_word(string, fun) do
+    string
+    |> String.split(" ")
+    |> Enum.with_index
+    |> Enum.map(fn({word,index}) ->
+      if rem(index, 2) == 0 do
+        word
+      else
+        fun.(word)
+      end
+    end)
+    |> Enum.join(" ")
   end
 end
