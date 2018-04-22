@@ -3,18 +3,18 @@ defmodule OtpPlayground.FridgeServerTest do
   alias OtpPlayground.FridgeServer
 
   test "put into fridge" do
-    {:ok, fridge} = GenServer.start_link FridgeServer, [], []
-    assert :ok == GenServer.call(fridge, {:store,:bacon})
+    {:ok, fridge} = FridgeServer.start_link
+    assert :ok == FridgeServer.store(fridge, :bacon)
   end
 
   test "remove from fridge" do
-    {:ok, fridge} = GenServer.start_link FridgeServer, [], []
-    GenServer.call(fridge, {:store,:bacon})
-    assert {:ok, :bacon} == GenServer.call(fridge, {:take, :bacon})
+    {:ok, fridge} = FridgeServer.start_link
+    FridgeServer.store(fridge, :bacon)
+    assert {:ok, :bacon} == FridgeServer.take(fridge, :bacon)
   end
 
   test "doesn't exist" do
-    {:ok, fridge} = GenServer.start_link FridgeServer, [], []
-    assert :not_found == GenServer.call(fridge, {:take,:bacon})
+    {:ok, fridge} = FridgeServer.start_link
+    assert :not_found == FridgeServer.take(fridge, :bacon)
   end
 end
