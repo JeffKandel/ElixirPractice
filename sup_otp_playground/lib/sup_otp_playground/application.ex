@@ -9,8 +9,7 @@ defmodule SupOtpPlayground.Application do
     # List all child processes to be supervised
     children = [
       # Starts a worker by calling: SupOtpPlayground.Worker.start_link(arg)
-      # {SupOtpPlayground.Worker, arg},
-      SupOtpPlayground.FridgeServer.start_link()
+      {SupOtpPlayground.FridgeServer, [name: Fridge]},
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

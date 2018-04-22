@@ -1,6 +1,6 @@
-defmodule OtpPlayground.FridgeServerTest do
+defmodule SupOtpPlayground.FridgeServerTest do
   use ExUnit.Case
-  alias OtpPlayground.FridgeServer
+  alias SupOtpPlayground.FridgeServer
 
   test "put into fridge" do
     {:ok, fridge} = FridgeServer.start_link
