@@ -23,6 +23,7 @@ defmodule Rpn do
   end
 
   def peek(pid) do
+    # refs are used to ensure that the only thing that receives the {^ref, val} pattern is this receive block
     ref = make_ref()
     send(pid, {self(), ref, :peek})
     receive do
